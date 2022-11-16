@@ -16,6 +16,7 @@ def about():
     return render_template('about.html', title='About')
 
 
+#Home page displays all the bookings
 @App.route("/home")
 @login_required
 def home():
