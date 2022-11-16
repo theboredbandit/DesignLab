@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2> Available Products </h2>
+      {% for product in products %}
+      {% if (product.quantity_kg)*1000+product.quantity_grams>0 %}
+          <article class="media content-section">
+            <div class="media-body">
+              <div class="article-metadata">
+                <a class="mr-2" href="#">Seller: {{ product.seller.username }}</a>
+                <small class="text-muted">Listed on {{ product.date_listed.strftime('%Y-%m-%d') }}</small>
+              </div>
+              <h3><a class="article-title" href="{{ url_for('buy_product', product_id=product.id) }}">{{ product.title }}</a></h3>
+<!--       <h6 class="article-title">{{  '%0.1f'| format(product.quantity_kg|float) }} kg</h6> -->
+      <h6 class="article-title">{{  product.quantity_kg }} kg  {{ product.quantity_grams }} gms</h6>      
+      <h6 class="article-title">INR {{  '%0.1f'| format(product.rate|float)}}/kg</h6>              
+              <p class="article-content">{{ product.additional_info }}</p>
+            </div>
+          </article>
+      {% endif %}
+      {% endfor %}
+{% endblock content %}

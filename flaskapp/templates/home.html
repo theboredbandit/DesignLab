@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% if products|length>0 %}
+        <h2> My Bookings </h2>
+      {% for product in products %}
+          <article class="media content-section">
+            <div class="media-body">
+              <div class="article-metadata">
+                <a class="mr-2" href="{{ url_for('booking', booking_id=product[0].id) }}">Booking id: {{product[0].id}}</a>
+                <small class="text-muted"> Booked on {{ product[0].date_of_booking.strftime('%Y-%m-%d') }}</small>
+              </div>
+              <h3><a class="article-title" href="{{ url_for('booking', booking_id=product[0].id) }}">{{ product[1].title }}</a></h3>              
+<!--               <p class="article-content">Quantity booked = {{ product[0].quantity_booked }} kg</p>
+              <p class="article-content">Cost = INR {{ product[0].cost }}</p> -->
+              <p class="article-content">{{ product[1].additional_info }}</p>
+            </div>
+          </article>
+      {% endfor %}
+    {% else %}
+      <h5>You have not made any bookings. <a href="{{ url_for('buy') }}">Book now.</a></h5>
+    {% endif %}  
+{% endblock content %}
+
+{% block sidebar %}
+  <div class="content-section">
+    <h3>Our Sidebar</h3>
+<!--     <p class='text-muted'>You can put any information here you'd like. -->
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-light">Latest Products</li>
+        <li class="list-group-item list-group-item-light">Announcements</li>
+        <li class="list-group-item list-group-item-light">Calendars</li>
+        <li class="list-group-item list-group-item-light">etc</li>
+      </ul>
+<!--     </p> -->
+  </div>
+{% endblock %}

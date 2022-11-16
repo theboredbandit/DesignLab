@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block content %}
+  <article class="media content-section">
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="#">{{ product.seller.username }}</a>
+        <small class="text-muted">{{ product.date_listed.strftime('%Y-%m-%d') }}</small>
+        {% if product.seller == current_user %}
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_product', product_id=product.id) }}">Update</a>
+            <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+          </div>
+        {% endif %}
+      </div>
+      <h2 class="article-title">{{ product.title }}</h2>
+<!--       <h4 class="article-title">{{  '%0.1f'| format(product.quantity_kg|float) }} kg</h4>
+ -->
+      <h4 class="article-title">{{product.quantity_kg}} kg  {{product.quantity_grams}} gms</h4> 
+      <h4 class="article-title">INR {{  '%0.1f'| format(product.rate|float)}}/kg</h4>
+      <p class="article-content">{{ product.additional_info }}</p>
+    </div>
+  </article>
+  <!-- Modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Delete Product?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <form action="{{ url_for('delete_product', product_id=product.id) }}" method="POST">
+            <input class="btn btn-danger" type="submit" value="Delete">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

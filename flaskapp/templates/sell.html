@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% if products|length>0 %}
+    <h2> Products listed by me </h2>    
+      {% for product in products %}
+          <article class="media content-section">
+            <div class="media-body">
+              <div class="article-metadata">
+<!--                 <a class="mr-2" href="#">{{ product.seller.username }}</a> -->
+                <small class="text-muted">Listed on {{ product.date_listed.strftime('%Y-%m-%d') }}</small>
+              </div>
+              <h3><a class="article-title" href="{{ url_for('product', product_id=product.id) }}">{{ product.title }}</a></h3>
+              <p class="article-content">{{ product.additional_info }}</p>
+            </div>
+          </article>
+      {% endfor %}
+    {% else %}
+      <h5>You have not listed any product for selling.</h5>
+    {% endif %}
+{% endblock content %}
+
+{% block sidebar %}
+  <div class="content-section">
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-light", style="text-align: center;"><a class="nav-item nav-link" href="{{ url_for('new_product') }}">Add new product</a></li>
+        <li class="list-group-item list-group-item-light", style="text-align: center;"><a class="nav-item nav-link" href="{{ url_for('orders_received') }}">View orders</a></li>
+        <li class="list-group-item list-group-item-light", style="text-align: center;"><a class="nav-item nav-link" href="{{ url_for('bank_account_details') }}">Update bank account details</a></li>        
+      </ul>
+  </div>
+{% endblock %}
